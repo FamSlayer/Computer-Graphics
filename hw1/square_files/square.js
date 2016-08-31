@@ -13,7 +13,7 @@ window.onload = function init()
     // Four Vertices
     
     var vertices = [
-        vec2( -0.1, -0.1 ),
+        vec2( -0.1, -0.5 ),
         vec2(  -0.5,  0.5 ),
         vec2(  0.5, 0.5 ),
         vec2( 0.5, -0.5)
