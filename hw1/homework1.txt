@@ -1,0 +1,21 @@
+CG Homework 1
+Walter "Fuller" Taylor
+taylow3@rpi.edu 661397856
+
+1.
+Ivan Sutherland invented the Sketchpad, which is a predecessor to graphical interfaces.
+He worked on the development of the line clipping algorithm.
+
+2.	1. 42
+	2. 42
+	
+3. 	1. y + z - 2 = 0
+	2. Intersects at (1, 1, 1)
+	
+4. https://rawgit.com/FamSlayer/Computer-Graphics/master/hw1/square.html
+
+5. A nonphysical representation is not going to look as good as a physical representation
+but it is much faster and more flexible.
+
+6. 1 / (1280 x 1024 x 72) = 1.05e-8
+
