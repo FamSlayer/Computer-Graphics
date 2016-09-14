@@ -17,9 +17,10 @@ Cultureal Institute in Paris during their 20% "Innovation Time Off". It was intr
 the Google I/O developers conference, and every attendee received a personal viewer. The
 softward development kit (SDK) is available for both the Android and iOS operating systems.
 
-4. [rawgit link]
+4. https://rawgit.com/FamSlayer/Computer-Graphics/master/hw2/square.html
 
-5.
+5.	By not allowing light to bounce between objects, verticies can be processed in parallel,
+which makes processing large scenes be possible in real time
 
 6.
 	a. Goldfish, zebrafish, zebra finch, columbidae, pollinating insects, reindeer
