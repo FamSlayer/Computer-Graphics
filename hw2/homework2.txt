@@ -1,0 +1,30 @@
+Walter "Fuller" Taylor
+Sam Suite
+
+COMPUTER GRAPHICS HOMEWORK 2
+
+
+1. Curtis Priem
+
+2. Memory
+
+3.	Google Cardboard is a virtual reality (VR) platform developed by Google for use with a 
+head mount for a smartphone. The platform is a cheap and easy system to stimulate interest
+and encourage development in VR applicaitons. It is literally made out of cardboard, and
+takes less than five minutes to fold and construct before it can be used countless times. 
+	The platform was created by David Coz and Damien Henry, both engineers at the Google
+Cultureal Institute in Paris during their 20% "Innovation Time Off". It was introduced at
+the Google I/O developers conference, and every attendee received a personal viewer. The
+softward development kit (SDK) is available for both the Android and iOS operating systems.
+
+4. [rawgit link]
+
+5.
+
+6.
+	a. Goldfish, zebrafish, zebra finch, columbidae, pollinating insects, reindeer
+	b. Because there are two cone cell pigment genes on the X chromosome, OPN1MW AND OPN1MW2.
+	Humans with two X chromosomes (binary-identifying women) could possess multiple cone 
+	cell pigments, each with a specific pattern of responsiveness to different wavelengths 
+	of light.
+	
