@@ -1,12 +1,6 @@
 
-var canvas;
 var gl;
-
 var points;
-var xspeed = 0;
-var yspeed = 0;
-var zspeed = 0;
-var theta = [ 0, 0, 0 ];
 
 window.onload = function init()
 {
@@ -16,7 +10,8 @@ window.onload = function init()
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
     
-    // 11874 Vertices
+    // Four Vertices
+    
     var vertices = [
         vec3(0.2862,0.101,0.1686),
         vec3(0.3144,0.101,0.1602),
@@ -11891,23 +11886,21 @@ window.onload = function init()
         vec3(-0.1278,-0.3256,0.0996),
         vec3(-0.1222,-0.3608,0.1172),
         vec3(0.0,-0.3262,0.1172),
-        vec3(-0.1406,-0.3254,0.1172)
-        ];
-    
+        vec3(-0.1406,-0.3254,0.1172),
+
+    ];
+
     //
     //  Configure WebGL
     //
-
     gl.viewport( 0, 0, canvas.width, canvas.height );
     gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
-    gl.enable(gl.DEPTH_TEST);
     
     //  Load shaders and initialize attribute buffers
     
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
     
-
     // Load the data into the GPU
     
     var bufferId = gl.createBuffer();
@@ -11920,35 +11913,11 @@ window.onload = function init()
     gl.vertexAttribPointer( vPosition, 3, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
 
-
-    thetaLoc = gl.getUniformLocation(program, "theta");
-
-    // Initialize event handlers
-
-    document.getElementById("xslider").onchange = function() {
-        xspeed = event.srcElement.value;
-    };
-    document.getElementById("yslider").onchange = function() {
-        yspeed = event.srcElement.value;
-    };
-    document.getElementById("zslider").onchange = function() {
-        xspeed = event.srcElement.value;
-    };
-
     render();
-
 };
 
 
 function render() {
-    gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    theta[0] += xspeed/10.0;
-    theta[1] += yspeed/10.0;
-    theta[2] += zspeed/10.0;
-    gl.uniform3fv(thetaLoc, theta);
-
+    gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, 11874 );
-
-    requestAnimFrame( render );
 }
