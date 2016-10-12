@@ -1,0 +1,10 @@
+Homework 6
+Computer Graphics
+Fuller Taylor
+Stephen Wood
+
+Our favorite version:
+https://rawgit.com/FamSlayer/Computer-Graphics/master/hw6/hw6_1.html
+
+Regular version:
+https://rawgit.com/FamSlayer/Computer-Graphics/master/hw6/hw6_2.html
