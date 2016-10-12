@@ -1,20 +1,21 @@
 
 var canvas;
 var gl;
-var points;
-var xspeed = 0;
-var yspeed = 0;
-var zspeed = 0;
+
+var numVertices  = 11874;
+
+var axis = 0;
+var xAxis = 0;
+var yAxis =1;
+var zAxis = 2;
 var theta = [ 0, 0, 0 ];
+var thetaLoc;
 
-window.onload = function init()
-{
-    var canvas = document.getElementById( "gl-canvas" );
-    
-    gl = WebGLUtils.setupWebGL( canvas );
-    if ( !gl ) { alert( "WebGL isn't available" ); }
+var t_x = 50;
+var t_y = 50;
+var t_z = 50;
 
-    
+
     // 11874 Vertices
     var vertices = [
         vec3(0.2862,0.101,0.1686),
@@ -11893,9 +11894,10 @@ window.onload = function init()
         vec3(-0.1406,-0.3254,0.1172)
         ];
 
+        // 11874 Vertices
 
-    // 11874 Vertex Colors
-    var vertexColors = [
+            // 11874 Vertices
+    /*var vertexColors = [
         vec4( 0.5, 0.5, 0.73051, 1.0 ),
         vec4( 0.5, 0.5, 0.70657, 1.0 ),
         vec4( 0.5, 0.5, 0.70714, 1.0 ),
@@ -23771,71 +23773,122 @@ window.onload = function init()
         vec4( 0.5, 0.5, 0.58402, 1.0 ),
         vec4( 0.5, 0.5, 0.58402, 1.0 ),
         ];
+    */
+var vertexColors = [];
+
+
+window.onload = function init()
+{
+    canvas = document.getElementById( "gl-canvas" );
     
-
-
-    //
-    //  Configure WebGL
-    //
+    gl = WebGLUtils.setupWebGL( canvas );
+    if ( !gl ) { alert( "WebGL isn't available" ); }
 
     gl.viewport( 0, 0, canvas.width, canvas.height );
-    gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
-    gl.enable(gl.DEPTH_TEST);
+    gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
     
+    gl.enable(gl.DEPTH_TEST);;
+
+    // create the vertexColors array by computing the normal and blah blah ex de
+    var i = 0;
+    var v1, v2, v3, t1, t2, curr_normal;
+    for(i; i < numVertices; i+=3)
+    {
+        v1 = vertices[i];
+        v2 = vertices[i+1];
+        v3 = vertices[i+2];
+        /*
+        console.log("v1:\t" + v1.toString());
+        console.log("v2:\t" + v2.toString());
+        console.log("v3:\t" + v3.toString());
+        */
+        t1 = subtract(v1, v2);
+        t2 = subtract(v3, v2);
+        /*
+        console.log("t1:\t" + t1.toString());
+        console.log("t2:\t" + t2.toString());
+        */
+        curr_normal = normalize(cross(t1, t2));
+        
+        curr_normal = vec4(curr_normal[0]/2 + 0.5, curr_normal[1]/2 + 0.5, curr_normal[2]/2 + 0.5, 1.0);
+        /*
+        console.log("curr_normal:\t" + curr_normal.toString());
+        */
+        vertexColors.push(curr_normal);
+        vertexColors.push(curr_normal);
+        vertexColors.push(curr_normal);
+
+
+        // NOW, convert the curr_normal into an rgb thingy
+        //console.log(curr_normal[0]);
+    } 
+
+    //
     //  Load shaders and initialize attribute buffers
-    
+    //
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
     
+
+    // color array atrribute buffer
     
-
     var cBuffer = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer);
-    gl.bufferData( gl.ARRAY_BUFFER, flatten(vertexColors), gl.STATIC_DRAW);
+    gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer );
+    gl.bufferData( gl.ARRAY_BUFFER, flatten(vertexColors), gl.STATIC_DRAW );
 
-    var vColor = gl.getAttribLocation(program, "vColor");
-    gl.vertexAttribPointer( vColor, 4, gl.FLOAT, false, 0, 0);
+    var vColor = gl.getAttribLocation( program, "vColor" );
+    gl.vertexAttribPointer( vColor, 4, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vColor );
 
-
+    // vertex array attribute buffer
+    
     var vBuffer = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
-    gl.bufferData( gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW);
+    gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer );
+    gl.bufferData( gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW );
 
     var vPosition = gl.getAttribLocation( program, "vPosition" );
     gl.vertexAttribPointer( vPosition, 3, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
 
-
-    thetaLoc = gl.getUniformLocation(program, "theta");
-
-    // Initialize event handlers
-
-    document.getElementById("xslider").onchange = function() {
-        xspeed = event.srcElement.value;
+    thetaLoc = gl.getUniformLocation(program, "theta"); 
+    
+    //event listeners for buttons
+    
+    document.getElementById("slider_x").onchange = function() {
+        t_x = event.srcElement.value;
     };
-    document.getElementById("yslider").onchange = function() {
-        yspeed = event.srcElement.value;
-    };
-    document.getElementById("zslider").onchange = function() {
-        xspeed = event.srcElement.value;
+    
+    document.getElementById("slider_y").onchange = function() {
+        t_y = event.srcElement.value;
     };
 
+    document.getElementById("slider_z").onchange = function() {
+        t_z = event.srcElement.value;
+    };
+
+    
     render();
+}
 
-};
-
-
-function render() {
+function render()
+{
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    theta[0] += xspeed/10.0;
-    theta[1] += yspeed/10.0;
-    theta[2] += zspeed/10.0;
+    theta[0] = t_x;
+    theta[1] = t_y;
+    theta[2] = t_z;
     gl.uniform3fv(thetaLoc, theta);
 
-    //gl.drawArrays( gl.TRIANGLES, 0, 11874 );
-    gl.drawArrays( gl.TRIANGLES, 11874, gl.UNSIGNED_BYTE, 0 );
+
+    //gl.drawElements( gl.TRIANGLES, numVertices, gl.UNSIGNED_BYTE, 0 );
+    gl.drawArrays( gl.TRIANGLES, 0, numVertices );
 
     requestAnimFrame( render );
 }
+
+/*
+function subtract( var a, var b)
+{
+
+}
+*/
